@@ -10,7 +10,6 @@ namespace ChatServicesTests
 	[TestFixture()]
 	public class ChannelTests
 	{
-		//private System.Net.HttpStatusCode statusCode { get; set; }
 		private Mock<IWebOperationContext> basicWebContext { get; set; }
 
 		[SetUp]
@@ -30,8 +29,8 @@ namespace ChatServicesTests
 		{
 			System.Net.HttpStatusCode statusCode = System.Net.HttpStatusCode.NotImplemented;
 			this.basicWebContext.SetupSet(x => x.OutgoingResponse.StatusCode = It.IsAny<System.Net.HttpStatusCode>())
-			           .Callback((System.Net.HttpStatusCode x) => statusCode = x);
-			
+					   .Callback((System.Net.HttpStatusCode x) => statusCode = x);
+
 			IChatService service = new ChatService(this.basicWebContext.Object);
 			Channel channel = new Channel { ChannelName = "test channel" };
 			Assert.AreEqual(0, (service as ChatService).Channels.Count(), "the channel list should be empty on start up");
@@ -44,7 +43,7 @@ namespace ChatServicesTests
 
 		[Test()]
 		public void CreateChannelAlreadyExists()
-		{ 
+		{
 			System.Net.HttpStatusCode statusCode = System.Net.HttpStatusCode.NotImplemented;
 			this.basicWebContext.SetupSet(x => x.OutgoingResponse.StatusCode = It.IsAny<System.Net.HttpStatusCode>())
 					   .Callback((System.Net.HttpStatusCode x) => statusCode = x);
@@ -58,6 +57,39 @@ namespace ChatServicesTests
 			Assert.AreEqual(1, (service as ChatService).Channels.Count(), "the chat channel list was not updated");
 			Assert.AreEqual("existing test channel", (service as ChatService).Channels.FirstOrDefault().ChannelName, "the channel name was incorrect");
 			Assert.AreEqual(System.Net.HttpStatusCode.Conflict, statusCode, "the response status was not correct");
+		}
+
+		[Test()]
+		public void GetAllAvailableChannels()
+		{
+			System.Net.HttpStatusCode statusCode = System.Net.HttpStatusCode.NotImplemented;
+			this.basicWebContext.SetupSet(x => x.OutgoingResponse.StatusCode = It.IsAny<System.Net.HttpStatusCode>())
+					   .Callback((System.Net.HttpStatusCode x) => statusCode = x);
+
+			IChatService service = new ChatService(this.basicWebContext.Object);
+			(service as ChatService).Channels.Add(new Channel { ChannelName = "test channel 1" });
+			(service as ChatService).Channels.Add(new Channel { ChannelName = "test channel 2" });
+
+			var channels  =  service.GetAllChannels();
+			Assert.AreEqual(@"[{""ChannelName"":""test channel 1""},{""ChannelName"":""test channel 2""}]", channels.ToString(), "the channels were not returned properly");
+			Assert.AreEqual(System.Net.HttpStatusCode.OK, statusCode, "the response status was not correct");
+		}
+
+		[Test()]
+		public void GetChannelByName()
+		{ 
+			System.Net.HttpStatusCode statusCode = System.Net.HttpStatusCode.NotImplemented;
+			this.basicWebContext.SetupSet(x => x.OutgoingResponse.StatusCode = It.IsAny<System.Net.HttpStatusCode>())
+					   .Callback((System.Net.HttpStatusCode x) => statusCode = x);
+
+			IChatService service = new ChatService(this.basicWebContext.Object);
+			(service as ChatService).Channels.Add(new Channel { ChannelName = "test channel 1" });
+			(service as ChatService).Channels.Add(new Channel { ChannelName = "test channel 2" });
+			(service as ChatService).Channels.Add(new Channel { ChannelName = "test channel 3" });
+
+			var channels = service.GetChannelByName(new Channel { ChannelName = "test channel 2"});
+			Assert.AreEqual(@"[{""ChannelName"":""test channel 2""}]", channels.ToString(), "the channels were not returned properly");
+			Assert.AreEqual(System.Net.HttpStatusCode.OK, statusCode, "the response status was not correct");
 		}
 	}
 }

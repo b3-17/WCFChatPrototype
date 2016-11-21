@@ -25,13 +25,19 @@ namespace ChatRESTServices.Services
 
 		public void CreateChannel(Channel channel)
 		{
-			this.Channels.Add(channel);
-			this.context.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Created;
+			if (this.Channels.Count(x => x.ChannelName == channel.ChannelName) == 0)
+			{
+				this.Channels.Add(channel);
+				this.context.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Created;
+			}
+			else
+				this.context.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Conflict;
 		}
 
-		public string GetAllChannels(Channel channel)
+		public string GetAllChannels()
 		{
 			JavaScriptSerializer serialiser = new JavaScriptSerializer();
+			this.context.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.OK;
 			return serialiser.Serialize(this.Channels);
 		}
 	}

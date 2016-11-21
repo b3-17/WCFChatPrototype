@@ -39,6 +39,8 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DynamicData" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -46,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChannelTests.cs" />
-    <Compile Include="FakeIncoming.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChatRESTServices\ChatRESTServices.csproj">

@@ -15,6 +15,6 @@ namespace ChatRESTServices.Services
 		[OperationContract]
 		[WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "/Channels")]
 		[WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Wrapped, UriTemplate = "Channels")]
-		string GetAllChannels(Channel channel);
+		string GetAllChannels();
     }
 }
