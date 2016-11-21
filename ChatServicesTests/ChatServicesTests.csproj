@@ -26,15 +26,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.5.28\lib\net45\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="WCFMock">
+      <HintPath>bin\Debug\WCFMock.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChannelTests.cs" />
+    <Compile Include="FakeIncoming.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChatRESTServices\ChatRESTServices.csproj">

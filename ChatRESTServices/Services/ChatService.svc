@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Services.ChatService" CodeBehind="Services.ChatService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="ChatRESTServices.Services.ChatService" CodeBehind="ChatService.svc.cs" %>

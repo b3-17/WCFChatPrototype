@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Models
 {
-	[DataContract]
+	[DataContract(Namespace = "")]
 	public class Channel
 	{
 		[DataMember]
